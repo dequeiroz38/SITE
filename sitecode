@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<body>
+    
+    <h1>Preencha Seus Dados</h1>
+    <form action="/action_page.php" method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" value="Gabriel Gallo">
+        <br><br>
+        <label for="curso">Curso:</label>
+        <input type="text" id="curso" name="curso" value="Talento Tech">
+        <br><br>
+        <label for="universidade">Universidade:</label>
+        <input type="text" id="universidade" name="universidade" value="UEPG">
+        <br><br>
+        <button type="submit">Enviar</button>
+    </form>
+    <p>Ao clicar no botão "Enviar", os dados do formulário serão enviados para a página "/action_page.php".</p>
+</body>
+</html>
