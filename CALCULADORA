@@ -1,0 +1,117 @@
+import 'package:flutter/material.dart';
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(CalculadoraApp());
+}
+
+class CalculadoraApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Calculadora Web',
+      home: Calculadora(),
+    );
+  }
+}
+
+class Calculadora extends StatefulWidget {
+  @override
+  _CalculadoraState createState() => _CalculadoraState();
+}
+
+class _CalculadoraState extends State<Calculadora> {
+  String _resultado = "0";
+  String _entrada = "";
+
+  void _adicionarEntrada(String valor) {
+    setState(() {
+      _entrada += valor;
+    });
+  }
+
+  void _calcular() {
+    try {
+      // Avalia a expressão matemática (use um pacote como 'math_expressions' para melhorar)
+      final resultado = _entrada.isNotEmpty ? double.parse(_entrada).toString() : "0";
+      setState(() {
+        _resultado = resultado;
+      });
+    } catch (e) {
+      setState(() {
+        _resultado = "Erro";
+      });
+    }
+  }
+
+  void _limpar() {
+    setState(() {
+      _entrada = "";
+      _resultado = "0";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Calculadora Responsiva'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: Colors.black12,
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                _entrada.isNotEmpty ? _entrada : _resultado,
+                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              padding: EdgeInsets.all(8.0),
+              child: GridView.builder(
+                itemCount: 16,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  childAspectRatio: 1.5,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                ),
+                itemBuilder: (context, index) {
+                  final List<String> botoes = [
+                    '7', '8', '9', '/',
+                    '4', '5', '6', '*',
+                    '1', '2', '3', '-',
+                    'C', '0', '=', '+',
+                  ];
+
+                  final String valor = botoes[index];
+
+                  return ElevatedButton(
+                    onPressed: () {
+                      if (valor == "=") {
+                        _calcular();
+                      } else if (valor == "C") {
+                        _limpar();
+                      } else {
+                        _adicionarEntrada(valor);
+                      }
+                    },
+                    child: Text(valor, style: TextStyle(fontSize: 20)),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
